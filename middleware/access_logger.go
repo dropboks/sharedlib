@@ -1,11 +1,16 @@
 package middleware
 
 import (
+	"encoding/json"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
 )
+
+type userData struct {
+	UserID string `json:"user_id"`
+}
 
 func AccessLogger(loger zerolog.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -21,8 +26,15 @@ func AccessLogger(loger zerolog.Logger) gin.HandlerFunc {
 		method := c.Request.Method
 		path := c.Request.URL.Path
 		userAgent := c.Request.UserAgent()
-		userID := c.GetString("user_id")
 		userDataHeader := c.Writer.Header().Get("User-Data")
+		var userDataID string
+		if userDataHeader != "" {
+			var ud userData
+			err := json.Unmarshal([]byte(userDataHeader), &ud)
+			if err == nil {
+				userDataID = ud.UserID
+			}
+		}
 
 		logEvent := loger.Info().
 			Str("type", "access").
@@ -31,7 +43,7 @@ func AccessLogger(loger zerolog.Logger) gin.HandlerFunc {
 			Str("path", path).
 			Str("ip", clientIP).
 			Str("user_agent", userAgent).
-			Str("user_id", userID).
+			Str("user_id", userDataID).
 			Dur("latency", duration)
 
 		if userDataHeader != "" {
