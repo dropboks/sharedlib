@@ -36,7 +36,7 @@ func AccessLogger(loger zerolog.Logger) gin.HandlerFunc {
 			}
 		}
 
-		logEvent := loger.Info().
+		loger.Info().
 			Str("type", "access").
 			Int("status", statusCode).
 			Str("method", method).
@@ -44,12 +44,7 @@ func AccessLogger(loger zerolog.Logger) gin.HandlerFunc {
 			Str("ip", clientIP).
 			Str("user_agent", userAgent).
 			Str("user_id", userDataID).
-			Dur("latency", duration)
-
-		if userDataHeader != "" {
-			logEvent = logEvent.Str("user_data", userDataHeader)
-		}
-
-		logEvent.Msg("incoming request")
+			Dur("latency", duration).
+			Msg("incoming request")
 	}
 }
