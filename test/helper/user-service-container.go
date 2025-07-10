@@ -16,7 +16,7 @@ func StartUserServiceContainer(ctx context.Context, sharedNetwork, version strin
 	req := testcontainers.ContainerRequest{
 		Name:         "user_service",
 		Image:        image,
-		ExposedPorts: []string{"50051:50051/tcp", "8082:8082/tcp"},
+		ExposedPorts: []string{"50051:50051/tcp", "8082:8081/tcp"},
 		Env:          map[string]string{"ENV": "test"},
 		Networks:     []string{sharedNetwork},
 		Cmd:          []string{"/user_service"},
