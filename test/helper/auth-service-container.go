@@ -11,7 +11,7 @@ type AuthServiceContainer struct {
 	Container testcontainers.Container
 }
 
-func StartAuthServiceContainer(ctx context.Context, sharedNetwork, version string) (*FileServiceContainer, error) {
+func StartAuthServiceContainer(ctx context.Context, sharedNetwork, version string) (*AuthServiceContainer, error) {
 	image := fmt.Sprintf("auth_service:%s", version)
 	req := testcontainers.ContainerRequest{
 		Name:         "auth_service",
@@ -30,7 +30,7 @@ func StartAuthServiceContainer(ctx context.Context, sharedNetwork, version strin
 		return nil, err
 	}
 
-	return &FileServiceContainer{
+	return &AuthServiceContainer{
 		Container: container,
 	}, nil
 }
