@@ -16,7 +16,7 @@ func StartNotificationServiceContainer(ctx context.Context, sharedNetwork, versi
 	req := testcontainers.ContainerRequest{
 		Name:     "notification_service",
 		Image:    image,
-		Env:      map[string]string{"ENV": "test-dependence"},
+		Env:      map[string]string{"ENV": "test"},
 		Networks: []string{sharedNetwork},
 		Cmd:      []string{"/notification_service"},
 	}

@@ -16,8 +16,8 @@ func StartFileServiceContainer(ctx context.Context, sharedNetwork, version strin
 	req := testcontainers.ContainerRequest{
 		Name:         "file_service",
 		Image:        image,
-		ExposedPorts: []string{"50052:50052/tcp"},
-		Env:          map[string]string{"ENV": "test-dependence"},
+		ExposedPorts: []string{"50052:50051/tcp"},
+		Env:          map[string]string{"ENV": "test"},
 		Networks:     []string{sharedNetwork},
 		Cmd:          []string{"/file_service"},
 	}

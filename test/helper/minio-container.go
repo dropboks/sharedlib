@@ -19,7 +19,7 @@ func StartMinioContainer(ctx context.Context, sharedNetwork, version string) (*M
 	req := testcontainers.ContainerRequest{
 		Name:         "minio",
 		Image:        minioImage,
-		ExposedPorts: []string{"9000:9000/tcp"},
+		ExposedPorts: []string{"9000/tcp"},
 		Env: map[string]string{
 			"MINIO_ROOT_USER":     viper.GetString("minio.credential.user"),
 			"MINIO_ROOT_PASSWORD": viper.GetString("minio.credential.password"),

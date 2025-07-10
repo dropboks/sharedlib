@@ -12,14 +12,14 @@ type AuthServiceContainer struct {
 }
 
 func StartAuthServiceContainer(ctx context.Context, sharedNetwork, version string) (*FileServiceContainer, error) {
-	image := fmt.Sprintf("auth:%s", version)
+	image := fmt.Sprintf("auth_service:%s", version)
 	req := testcontainers.ContainerRequest{
-		Name:         "file_service",
+		Name:         "auth_service",
 		Image:        image,
-		ExposedPorts: []string{"50052:50052/tcp"},
-		Env:          map[string]string{"ENV": "test-dependence"},
+		ExposedPorts: []string{"8081:8081/tcp"},
+		Env:          map[string]string{"ENV": "test"},
 		Networks:     []string{sharedNetwork},
-		Cmd:          []string{"/file_service"},
+		Cmd:          []string{"/auth_service"},
 	}
 
 	container, err := testcontainers.GenericContainer(ctx, testcontainers.GenericContainerRequest{

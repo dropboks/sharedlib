@@ -18,7 +18,7 @@ func StartRedisContainer(ctx context.Context, sharedNetwork, version string) (*R
 	req := testcontainers.ContainerRequest{
 		Name:         "redis",
 		Image:        image,
-		ExposedPorts: []string{"6379:6379/tcp"},
+		ExposedPorts: []string{"6379/tcp"},
 		Env: map[string]string{
 			"REDIS_PASSWORD": viper.GetString("redis.password"),
 		},
