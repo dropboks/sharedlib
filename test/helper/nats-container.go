@@ -32,7 +32,7 @@ func StartNatsContainer(ctx context.Context, sharedNetwork, version string) (*Na
 		},
 		Files: []testcontainers.ContainerFile{
 			{
-				HostFilePath:      "../mocks/nats/nats-server.conf",
+				HostFilePath:      viper.GetString("script.nats_server"),
 				ContainerFilePath: "/etc/nats/nats.conf",
 				FileMode:          0644,
 			},

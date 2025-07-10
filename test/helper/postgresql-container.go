@@ -30,7 +30,7 @@ func StartPostgresContainer(ctx context.Context, sharedNetwork, name, version st
 			WithOccurrence(2).WithStartupTimeout(5 * time.Second),
 		Files: []testcontainers.ContainerFile{
 			{
-				HostFilePath:      "../mocks/db/init-db.sql",
+				HostFilePath:      viper.GetString("script.init_sql"),
 				ContainerFilePath: "/docker-entrypoint-initdb.d/init-db.sql",
 				FileMode:          0644,
 			},
