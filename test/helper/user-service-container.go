@@ -3,8 +3,10 @@ package helper
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/testcontainers/testcontainers-go"
+	"github.com/testcontainers/testcontainers-go/wait"
 )
 
 type UserServiceContainer struct {
@@ -20,6 +22,7 @@ func StartUserServiceContainer(ctx context.Context, sharedNetwork, version strin
 		Env:          map[string]string{"ENV": "test"},
 		Networks:     []string{sharedNetwork},
 		Cmd:          []string{"/user_service"},
+		WaitingFor:   wait.ForLog("gRPC server running in port").WithStartupTimeout(30 * time.Second),
 	}
 
 	container, err := testcontainers.GenericContainer(ctx, testcontainers.GenericContainerRequest{

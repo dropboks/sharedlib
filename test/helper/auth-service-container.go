@@ -3,8 +3,10 @@ package helper
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/testcontainers/testcontainers-go"
+	"github.com/testcontainers/testcontainers-go/wait"
 )
 
 type AuthServiceContainer struct {
@@ -20,6 +22,7 @@ func StartAuthServiceContainer(ctx context.Context, sharedNetwork, version strin
 		Env:          map[string]string{"ENV": "test"},
 		Networks:     []string{sharedNetwork},
 		Cmd:          []string{"/auth_service"},
+		WaitingFor:   wait.ForLog("HTTP Server Starting in port").WithStartupTimeout(30 * time.Second),
 	}
 
 	container, err := testcontainers.GenericContainer(ctx, testcontainers.GenericContainerRequest{
