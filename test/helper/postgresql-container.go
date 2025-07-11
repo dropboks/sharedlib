@@ -58,7 +58,7 @@ func StartPostgresContainer(ctx context.Context, sharedNetwork, name, version st
 	}
 
 	return &PostgresContainer{
-		Container: nil,
+		Container: container,
 	}, nil
 }
 
